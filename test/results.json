@@ -1,0 +1,490 @@
+{
+ "tests": [
+  {
+   "id": "TC01",
+   "module": "Authentication",
+   "desc": "Register with valid details",
+   "expected": "201 Created and a session token",
+   "actual": "201, token issued",
+   "pass": true
+  },
+  {
+   "id": "TC02",
+   "module": "Authentication",
+   "desc": "Register with an email that already exists",
+   "expected": "409 Conflict",
+   "actual": "409: An account with this email already exists.",
+   "pass": true
+  },
+  {
+   "id": "TC03",
+   "module": "Authentication",
+   "desc": "Register with a password shorter than 6 characters",
+   "expected": "400 Bad Request",
+   "actual": "400: Password must be at least 6 characters.",
+   "pass": true
+  },
+  {
+   "id": "TC04",
+   "module": "Authentication",
+   "desc": "Register with an invalid email address",
+   "expected": "400 Bad Request",
+   "actual": "400: Please enter a valid email address.",
+   "pass": true
+  },
+  {
+   "id": "TC05",
+   "module": "Authentication",
+   "desc": "Log in with correct credentials",
+   "expected": "200 OK and a session token",
+   "actual": "200, token issued",
+   "pass": true
+  },
+  {
+   "id": "TC06",
+   "module": "Authentication",
+   "desc": "Log in with a wrong password",
+   "expected": "401 Unauthorized",
+   "actual": "401: Incorrect email or password.",
+   "pass": true
+  },
+  {
+   "id": "TC07",
+   "module": "Authentication",
+   "desc": "Open a protected route without logging in",
+   "expected": "401 Unauthorized",
+   "actual": "401: Please log in first.",
+   "pass": true
+  },
+  {
+   "id": "TC08",
+   "module": "Items",
+   "desc": "Share an item with valid details",
+   "expected": "201 Created",
+   "actual": "201, item id 21",
+   "pass": true
+  },
+  {
+   "id": "TC09",
+   "module": "Items",
+   "desc": "Share an item without a title",
+   "expected": "400 Bad Request",
+   "actual": "400: Please give the item a title (at least 3 characters).",
+   "pass": true
+  },
+  {
+   "id": "TC10",
+   "module": "Items",
+   "desc": "Share an item with an invalid category",
+   "expected": "400 Bad Request",
+   "actual": "400: Please choose a valid category.",
+   "pass": true
+  },
+  {
+   "id": "TC11",
+   "module": "Items",
+   "desc": "Browse all items without logging in",
+   "expected": "200 OK and the full list (21 items)",
+   "actual": "200, 21 items",
+   "pass": true
+  },
+  {
+   "id": "TC12",
+   "module": "Items",
+   "desc": "Search for the keyword “ladder”",
+   "expected": "Only the step ladder is returned",
+   "actual": "1 result: Aluminium step ladder (6 ft)",
+   "pass": true
+  },
+  {
+   "id": "TC13",
+   "module": "Items",
+   "desc": "Filter by category “Kitchen”",
+   "expected": "Every returned item is in Kitchen",
+   "actual": "4 items, all Kitchen: true",
+   "pass": true
+  },
+  {
+   "id": "TC14",
+   "module": "Items",
+   "desc": "Filter items within 3 km (user in Deorali)",
+   "expected": "Every returned item is 3 km or closer",
+   "actual": "17 items, max distance 2.7 km",
+   "pass": true
+  },
+  {
+   "id": "TC15",
+   "module": "Items",
+   "desc": "Sort items by nearest first",
+   "expected": "Distances are in ascending order",
+   "actual": "first 0 km, last 12.9 km",
+   "pass": true
+  },
+  {
+   "id": "TC16",
+   "module": "Items",
+   "desc": "Remove an item that belongs to someone else",
+   "expected": "403 Forbidden",
+   "actual": "403: You can only remove your own items.",
+   "pass": true
+  },
+  {
+   "id": "TC17",
+   "module": "Items",
+   "desc": "Remove your own item",
+   "expected": "200 OK",
+   "actual": "200",
+   "pass": true
+  },
+  {
+   "id": "TC18",
+   "module": "Requests",
+   "desc": "Request your own item",
+   "expected": "400 Bad Request",
+   "actual": "400: You cannot borrow your own item.",
+   "pass": true
+  },
+  {
+   "id": "TC19",
+   "module": "Requests",
+   "desc": "Request with an end date before the start date",
+   "expected": "400 Bad Request",
+   "actual": "400: The end date must be on or after the start date.",
+   "pass": true
+  },
+  {
+   "id": "TC20",
+   "module": "Requests",
+   "desc": "Request longer than the item’s maximum lending period (2 days)",
+   "expected": "400 Bad Request",
+   "actual": "400: This item can be borrowed for at most 2 day(s).",
+   "pass": true
+  },
+  {
+   "id": "TC21",
+   "module": "Requests",
+   "desc": "Send a valid borrow request",
+   "expected": "201 Created",
+   "actual": "201, request id 9",
+   "pass": true
+  },
+  {
+   "id": "TC22",
+   "module": "Requests",
+   "desc": "Send a second pending request for the same item",
+   "expected": "409 Conflict",
+   "actual": "409: You already have a pending request for this item.",
+   "pass": true
+  },
+  {
+   "id": "TC23",
+   "module": "Requests",
+   "desc": "Someone other than the owner tries to accept",
+   "expected": "403 Forbidden",
+   "actual": "403: Only the item owner can do this.",
+   "pass": true
+  },
+  {
+   "id": "TC24",
+   "module": "Requests",
+   "desc": "Owner accepts the request",
+   "expected": "Request accepted and item becomes “lent”",
+   "actual": "200, request accepted, item lent",
+   "pass": true
+  },
+  {
+   "id": "TC25",
+   "module": "Requests",
+   "desc": "Request an item that is already lent out",
+   "expected": "409 Conflict",
+   "actual": "409: This item is currently lent out.",
+   "pass": true
+  },
+  {
+   "id": "TC26",
+   "module": "Requests",
+   "desc": "Owner marks the item as returned",
+   "expected": "Request returned and item “available” again",
+   "actual": "200, request returned, item available",
+   "pass": true
+  },
+  {
+   "id": "TC27",
+   "module": "Requests",
+   "desc": "Borrower cancels a pending request",
+   "expected": "Request status becomes “cancelled”",
+   "actual": "200, cancelled",
+   "pass": true
+  },
+  {
+   "id": "TC28",
+   "module": "Wanted board",
+   "desc": "Post a valid “wanted” request",
+   "expected": "201 Created",
+   "actual": "201, id 7",
+   "pass": true
+  },
+  {
+   "id": "TC29",
+   "module": "Wanted board",
+   "desc": "Post a request that is too short",
+   "expected": "400 Bad Request",
+   "actual": "400: Please describe what you need (at least 4 characters).",
+   "pass": true
+  },
+  {
+   "id": "TC30",
+   "module": "Wanted board",
+   "desc": "Smart matches for “Need a ladder to reach the ceiling fan”",
+   "expected": "Top match is the aluminium step ladder",
+   "actual": "Top: Aluminium step ladder (6 ft) (83%)",
+   "pass": true
+  },
+  {
+   "id": "TC31",
+   "module": "Wanted board",
+   "desc": "Another user views someone else’s matches",
+   "expected": "403 Forbidden",
+   "actual": "403: You can only see matches for your own requests.",
+   "pass": true
+  },
+  {
+   "id": "TC32",
+   "module": "Wanted board",
+   "desc": "Mark a request as fulfilled",
+   "expected": "It disappears from the open board",
+   "actual": "still listed: false",
+   "pass": true
+  },
+  {
+   "id": "TC33",
+   "module": "Security",
+   "desc": "SQL injection attempt in the search box",
+   "expected": "No error and no data leak (0 results)",
+   "actual": "200, 0 results",
+   "pass": true
+  },
+  {
+   "id": "TC34",
+   "module": "Security",
+   "desc": "Check how passwords are stored in the database",
+   "expected": "Salted scrypt hash, never plain text",
+   "actual": "hash length 64, equals password: false",
+   "pass": true
+  }
+ ],
+ "passed": 34,
+ "total": 34,
+ "matching": {
+  "total": 18,
+  "top1": 15,
+  "top3": 17,
+  "mrr": 0.89,
+  "cases": [
+   {
+    "text": "Need a ladder to reach the ceiling fan",
+    "expected": "Aluminium step ladder (6 ft)",
+    "rank": 1,
+    "top": "Aluminium step ladder (6 ft)",
+    "topScore": 83,
+    "count": 1
+   },
+   {
+    "text": "Looking for a drill to put up shelves",
+    "expected": "Cordless power drill with bit set",
+    "rank": 1,
+    "top": "Cordless power drill with bit set",
+    "topScore": 77,
+    "count": 1
+   },
+   {
+    "text": "Want to borrow a beamer for a presentation",
+    "expected": "Portable projector with HDMI cable",
+    "rank": 1,
+    "top": "Portable projector with HDMI cable",
+    "topScore": 75,
+    "count": 1
+   },
+   {
+    "text": "Need a big pot to cook for 30 guests",
+    "expected": "Large stock pot for parties",
+    "rank": 2,
+    "top": "Pressure cooker 7 litre",
+    "topScore": 83,
+    "count": 2
+   },
+   {
+    "text": "Need a tent for a camping trip",
+    "expected": "4-person camping tent",
+    "rank": 1,
+    "top": "4-person camping tent",
+    "topScore": 70,
+    "count": 1
+   },
+   {
+    "text": "Want a DSLR for a wedding photo shoot",
+    "expected": "DSLR camera with 50mm lens",
+    "rank": 1,
+    "top": "DSLR camera with 50mm lens",
+    "topScore": 80,
+    "count": 1
+   },
+   {
+    "text": "Need folding tables for a community lunch",
+    "expected": "Folding tables (set of 4)",
+    "rank": 1,
+    "top": "Folding tables (set of 4)",
+    "topScore": 83,
+    "count": 1
+   },
+   {
+    "text": "Looking for a chess board",
+    "expected": "Wooden chess set",
+    "rank": 2,
+    "top": "Board game set: Catan",
+    "topScore": 87,
+    "count": 2
+   },
+   {
+    "text": "Need a lawn mower to cut the grass",
+    "expected": "Electric lawn mower",
+    "rank": 1,
+    "top": "Electric lawn mower",
+    "topScore": 69,
+    "count": 1
+   },
+   {
+    "text": "Looking for fairy lights for decoration",
+    "expected": "String lights 20m",
+    "rank": 1,
+    "top": "String lights 20m",
+    "topScore": 87,
+    "count": 1
+   },
+   {
+    "text": "Need a bluetooth speaker for a farewell",
+    "expected": "Bluetooth party speaker",
+    "rank": 1,
+    "top": "Bluetooth party speaker",
+    "topScore": 83,
+    "count": 1
+   },
+   {
+    "text": "Need a saw and hammer to fix a bench",
+    "expected": "Hand saw and hammer set",
+    "rank": 1,
+    "top": "Hand saw and hammer set",
+    "topScore": 77,
+    "count": 2
+   },
+   {
+    "text": "Want a sleeping bag for a cold night",
+    "expected": "Sleeping bag (-5°C)",
+    "rank": 1,
+    "top": "Sleeping bag (-5°C)",
+    "topScore": 68,
+    "count": 4
+   },
+   {
+    "text": "Need a trekking bag for a hike",
+    "expected": "Trekking backpack 60L",
+    "rank": 1,
+    "top": "Trekking backpack 60L",
+    "topScore": 73,
+    "count": 4
+   },
+   {
+    "text": "Looking for something to cook snacks without oil",
+    "expected": "Air fryer (4 litre)",
+    "rank": 0,
+    "top": "Pressure cooker 7 litre",
+    "topScore": 62,
+    "count": 1
+   },
+   {
+    "text": "Need a pressure cooker for rajma",
+    "expected": "Pressure cooker 7 litre",
+    "rank": 1,
+    "top": "Pressure cooker 7 litre",
+    "topScore": 87,
+    "count": 2
+   },
+   {
+    "text": "Want a board game for a family evening",
+    "expected": "Board game set: Catan",
+    "rank": 1,
+    "top": "Board game set: Catan",
+    "topScore": 87,
+    "count": 3
+   },
+   {
+    "text": "Need a shovel to plant saplings",
+    "expected": "Garden shovel and pruning shears",
+    "rank": 1,
+    "top": "Garden shovel and pruning shears",
+    "topScore": 82,
+    "count": 1
+   }
+  ],
+  "negatives": [
+   {
+    "text": "Need a helicopter for a day",
+    "count": 0
+   },
+   {
+    "text": "Looking for a grand piano",
+    "count": 0
+   },
+   {
+    "text": "Want a surfboard for the weekend",
+    "count": 0
+   }
+  ],
+  "negCorrect": 3
+ },
+ "perf": [
+  {
+   "label": "GET /api/items (21 items)",
+   "n": 200,
+   "mean": 1.6,
+   "p95": 4,
+   "max": 7.6
+  },
+  {
+   "label": "GET /api/items?q=drill (search)",
+   "n": 200,
+   "mean": 1.4,
+   "p95": 2.3,
+   "max": 9.6
+  },
+  {
+   "label": "GET /api/items?sort=distance (logged in)",
+   "n": 200,
+   "mean": 1.9,
+   "p95": 3.7,
+   "max": 16.9
+  },
+  {
+   "label": "GET /api/wanted/:id/matches (21 items)",
+   "n": 200,
+   "mean": 2.2,
+   "p95": 3.8,
+   "max": 9.8
+  },
+  {
+   "label": "GET /api/wanted/:id/matches (2,021 items)",
+   "n": 100,
+   "mean": 26.2,
+   "p95": 36.1,
+   "max": 37.1
+  },
+  {
+   "label": "GET /api/items?q=widget (2,021 items)",
+   "n": 50,
+   "mean": 33.9,
+   "p95": 38.3,
+   "max": 58.8
+  }
+ ],
+ "node": "v22.23.4"
+}

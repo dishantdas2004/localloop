@@ -1,0 +1,79 @@
+[
+ {
+  "id": "UI01",
+  "desc": "Create an account through the registration form",
+  "expected": "User is logged in and the name appears in the navigation bar",
+  "actual": "Navigation shows: Sikha Sharma",
+  "pass": true
+ },
+ {
+  "id": "UI02",
+  "desc": "Share an item using the \u201cShare an item\u201d form",
+  "expected": "Item page opens showing the new title",
+  "actual": "Item page title: Portable induction cooktop",
+  "pass": true
+ },
+ {
+  "id": "UI03",
+  "desc": "Type \u201cprojector\u201d in the search box",
+  "expected": "Grid updates live to show only matching items",
+  "actual": "1 card(s): Portable projector with HDMI cable",
+  "pass": true
+ },
+ {
+  "id": "UI04",
+  "desc": "Submit a borrow request with the end date before the start date",
+  "expected": "Friendly error message is shown, no request created",
+  "actual": "Message: The end date must be on or after the start date.",
+  "pass": true
+ },
+ {
+  "id": "UI05",
+  "desc": "Borrower sends a request for the step ladder",
+  "expected": "Request appears under \u201cRequests I made\u201d as Pending",
+  "actual": "Dashboard shows ladder request, Pending: True",
+  "pass": true
+ },
+ {
+  "id": "UI06",
+  "desc": "Owner accepts the request from the dashboard",
+  "expected": "Status changes to Accepted and \u201cMark as returned\u201d appears",
+  "actual": "Card shows: Accepted, Mark as returned",
+  "pass": true
+ },
+ {
+  "id": "UI07",
+  "desc": "Owner marks the ladder as returned",
+  "expected": "Item shows as Available again",
+  "actual": "Item page status: Available",
+  "pass": true
+ },
+ {
+  "id": "UI08",
+  "desc": "Share an item whose name contains HTML/JavaScript (<img onerror>, <script>)",
+  "expected": "Shown as plain text; no script runs; no element injected",
+  "actual": "Shown as text: True; dialogs fired: 0; injected elements: 0",
+  "pass": true
+ },
+ {
+  "id": "UI09",
+  "desc": "Open the dashboard while logged out",
+  "expected": "Prompted to log in instead of showing data",
+  "actual": "Page says: Please log in",
+  "pass": true
+ },
+ {
+  "id": "UI10",
+  "desc": "Open the home page on a 390 px wide phone screen",
+  "expected": "No horizontal scrolling; layout fits the screen",
+  "actual": "page width 390px, screen width 390px",
+  "pass": true
+ },
+ {
+  "id": "UI11",
+  "desc": "Open an item page on the same phone screen",
+  "expected": "No horizontal scrolling",
+  "actual": "page width 390px, screen width 390px",
+  "pass": true
+ }
+]

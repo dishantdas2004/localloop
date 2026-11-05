@@ -1,0 +1,20 @@
+{
+  "name": "localloop",
+  "version": "1.0.0",
+  "description": "LocalLoop - neighbourhood item-sharing platform with smart matching",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings start.js",
+    "seed": "node --no-warnings seed.js",
+    "test": "node --no-warnings test/run_tests.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}
